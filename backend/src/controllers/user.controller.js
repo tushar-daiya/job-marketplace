@@ -1,3 +1,4 @@
+import { Company } from "../models/company.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -16,6 +17,10 @@ export const registerUser = async (req, res, next) => {
     let user = await User.findOne({ email });
     if (user) {
       throw new ApiError(400, "User already exists");
+    }
+    user = await Company.findOne({ email });
+    if (user) {
+      throw new ApiError(400, "Email already exists");
     }
     user = await User.create({ email, phone, password, fullName });
     res.status(201).json(new ApiResponse("User registered successfully", user));
@@ -45,6 +50,15 @@ export const loginUser = async (req, res, next) => {
       secure: true,
     });
     res.status(200).json(new ApiResponse("User logged in successfully", user));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logoutUser = async (req, res, next) => {
+  try {
+    res.clearCookie("accessToken");
+    res.status(200).json(new ApiResponse("User logged out successfully"));
   } catch (error) {
     next(error);
   }
