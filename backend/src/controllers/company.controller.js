@@ -3,6 +3,7 @@ import { Company } from "../models/company.model.js";
 import { User } from "../models/user.model.js";
 import { generateAccessToken } from "../utils/accessToken.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
 export const registerCompany = async (req, res, next) => {
   try {
     const {
@@ -82,6 +83,19 @@ export const logoutCompany = async (req, res, next) => {
   try {
     res.clearCookie("accessToken");
     res.status(200).json(new ApiResponse("Logged out successfully"));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProfile = async (req, res, next) => {
+  try {
+    const file = req.file;
+    if (file) {
+      const filePath = file?.path;
+      const logo = await uploadToCloudinary(filePath);
+    }
+    res.status(200).json(new ApiResponse("Profile updated successfully"));
   } catch (error) {
     next(error);
   }
