@@ -3,19 +3,11 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const companySchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     companyName: {
       type: String,
       required: true,
     },
     email: {
-      type: String,
-      required: true,
-    },
-    designation: {
       type: String,
       required: true,
     },

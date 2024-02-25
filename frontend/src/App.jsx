@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/auth/Layout";
 import LoginStudent from "./pages/auth/LoginStudent";
 import RegisterStudent from "./pages/auth/RegisterStudent";
+import RegisterCompany from "./pages/auth/RegisterCompany";
+import LoginCompany from "./pages/auth/LoginCompany";
 function App() {
   return (
     <div className="App">
@@ -10,6 +12,8 @@ function App() {
           <Route path="/auth/*" element={<Layout />}>
             <Route path="student/login" element={<LoginStudent />} />
             <Route path="student/register" element={<RegisterStudent />} />
+            <Route path="company/login" element={<LoginCompany />} />
+            <Route path="company/register" element={<RegisterCompany />} />
           </Route>
         </Routes>
       </BrowserRouter>
