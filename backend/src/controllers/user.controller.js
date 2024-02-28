@@ -23,7 +23,7 @@ export const registerUser = async (req, res, next) => {
       throw new ApiError(400, "Email already exists");
     }
     user = await User.create({ email, phone, password, fullName });
-    res.status(201).json(new ApiResponse("User registered successfully", user));
+    res.status(201).json(new ApiResponse(201, "User registered successfully"));
   } catch (error) {
     next(error);
   }
@@ -44,12 +44,14 @@ export const loginUser = async (req, res, next) => {
       throw new ApiError(400, "Invalid credentials");
     }
     const accessToken = await generateAccessToken(user._id);
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      sameSite: "None",
-      secure: true,
-    });
-    res.status(200).json(new ApiResponse("User logged in successfully", user));
+    res
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+      })
+      .status(200)
+      .json(new ApiResponse(200, "User logged in successfully"));
   } catch (error) {
     next(error);
   }
@@ -59,6 +61,20 @@ export const logoutUser = async (req, res, next) => {
   try {
     res.clearCookie("accessToken");
     res.status(200).json(new ApiResponse("User logged out successfully"));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getMe = async (req, res, next) => {
+  try {
+    console.log(req.user);
+    res.status(200).json(
+      new ApiResponse(200, "User found successfully", {
+        user: req.user,
+        type: "student",
+      })
+    );
   } catch (error) {
     next(error);
   }

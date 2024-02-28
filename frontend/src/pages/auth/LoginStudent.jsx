@@ -1,12 +1,27 @@
 import { Formik } from "formik";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Input, Label, PasswordInput } from "../../components/ui/Input";
 import { Button, GoogleAuthButton } from "../../components/ui/Button";
 import { ArrowRight } from "lucide-react";
-
+import { useLoginMutation } from "../../store/features/api/studentApiSlice";
+import { toast } from "sonner";
+import Spinner from "../../components/ui/Spinner";
 export default function LoginStudent() {
+  const navigate = useNavigate();
+  console.log(document.cookie.split(";"));
+  const [loginUser, { data, error, isLoading, isSuccess, isError }] =
+    useLoginMutation();
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login Successful");
+      // navigate("/student/dashboard");
+    }
+    if (isError) {
+      toast.error(error.message);
+    }
+  }, [isLoading, isSuccess, isError]);
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required"),
     password: Yup.string()
@@ -25,10 +40,11 @@ export default function LoginStudent() {
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={loginSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          console.log(values);
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
+          await loginUser(values);
           setSubmitting(false);
           resetForm();
+          // navigate("/student/dashboard");
         }}
       >
         {({
@@ -85,8 +101,14 @@ export default function LoginStudent() {
                 disabled={isSubmitting}
                 className="w-full bg-blue-800 hover:bg-blue-900 text-white"
               >
-                Sign In
-                <ArrowRight size={20} />
+                {isSubmitting ? (
+                  <Spinner />
+                ) : (
+                  <>
+                    Sign In
+                    <ArrowRight size={20} />
+                  </>
+                )}
               </Button>
             </div>
             <div className="mt-5">

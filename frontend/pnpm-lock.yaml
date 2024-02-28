@@ -38,6 +38,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.22.1
     version: 6.22.1(react-dom@18.2.0)(react@18.2.0)
+  sonner:
+    specifier: ^1.4.1
+    version: 1.4.1(react-dom@18.2.0)(react@18.2.0)
   tailwind-merge:
     specifier: ^2.2.1
     version: 2.2.1
@@ -2498,6 +2501,16 @@ packages:
   /signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  /sonner@1.4.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-KJcFbMF+z2OMSJ9H+N6mrk/ffnEzuyLFlHoza/HQvNyiACoY958VtFdC7xD9D74ttzA+kcS1YIJOsNwbKWDsHw==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

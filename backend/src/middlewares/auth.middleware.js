@@ -9,7 +9,7 @@ export const verifyUserToken = async (req, res, next) => {
       throw new Error("Not Authorized");
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = User.findById(decoded.id);
+    const user = await User.findById(decoded.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -27,7 +27,7 @@ export const verifyCompanyToken = async (req, res, next) => {
       throw new Error("Not Authorized");
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const company = Company.findById(decoded.id);
+    const company = await Company.findById(decoded.id);
     if (!company) {
       throw new Error("Company not found");
     }
