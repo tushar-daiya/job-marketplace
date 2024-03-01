@@ -1,12 +1,27 @@
 import { Formik } from "formik";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Input, Label, PasswordInput } from "../../components/ui/Input";
 import { Button, GoogleAuthButton } from "../../components/ui/Button";
 import { ArrowRight } from "lucide-react";
+import { useRegisterMutation } from "../../store/features/api/companyApiSlice";
+import { toast } from "sonner";
 
 export default function RegisterCompany() {
+  const [register, { isLoading, isSuccess, isError, error }] =
+    useRegisterMutation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Registered Successfully");
+      navigate("/auth/student/login");
+    }
+    if (isError) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }, [isLoading, isSuccess, isError]);
   const registerSchema = Yup.object().shape({
     companyName: Yup.string().required("Company name is required"),
     email: Yup.string().email("Invalid Email").required("Email is required"),
@@ -36,8 +51,8 @@ export default function RegisterCompany() {
           phone: "",
         }}
         validationSchema={registerSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          console.log(values);
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
+          await register(values);
           setSubmitting(false);
           resetForm();
         }}

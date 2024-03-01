@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
-const userSchema = new Schema(
+const studentSchema = new Schema(
   {
     fullName: {
       type: String,
@@ -19,6 +19,10 @@ const userSchema = new Schema(
       required: true,
     },
     state: {
+      type: String,
+      required: false,
+    },
+    city: {
       type: String,
       required: false,
     },
@@ -52,20 +56,43 @@ const userSchema = new Schema(
         required: false,
       },
     },
+    skills: [],
+    projects: [
+      {
+        title: {
+          type: String,
+          required: false,
+        },
+        description: {
+          type: String,
+          required: false,
+        },
+        link: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
+    appliedJobs: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Job",
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
 
-userSchema.pre("save", async function (next) {
+studentSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
+studentSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-export const User = mongoose.model("User", userSchema);
+export const Student = mongoose.model("Student", studentSchema);

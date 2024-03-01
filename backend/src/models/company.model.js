@@ -35,6 +35,30 @@ const companySchema = new Schema(
       type: String,
       required: false,
     },
+    address: {
+      type: String,
+      required: false,
+    },
+    socials: {
+      github: {
+        type: String,
+        required: false,
+      },
+      linkedin: {
+        type: String,
+        required: false,
+      },
+      twitter: {
+        type: String,
+        required: false,
+      },
+    },
+    jobs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job",
+      },
+    ],
   },
   {
     timestamps: true,

@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import Layout from "./pages/auth/Layout";
 import LoginStudent from "./pages/auth/LoginStudent";
 import RegisterStudent from "./pages/auth/RegisterStudent";
@@ -33,7 +39,20 @@ function App() {
             <Route path="company/register" element={<RegisterCompany />} />
           </Route>
 
-          <Route path="/student/*">
+          <Route
+            path="/student/*"
+            element={
+              me ? (
+                me.type == "student" ? (
+                  <Outlet />
+                ) : (
+                  <Navigate to={"/company/dashboard"} />
+                )
+              ) : (
+                <Navigate to={"/auth/student/login"} />
+              )
+            }
+          >
             <Route path="dashboard" element={<div>Student Dashboard</div>} />
             <Route path="profile" element={<div>Student Profile</div>} />
           </Route>
