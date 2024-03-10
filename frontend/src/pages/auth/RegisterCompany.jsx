@@ -5,12 +5,12 @@ import * as Yup from "yup";
 import { Input, Label, PasswordInput } from "../../components/ui/Input";
 import { Button, GoogleAuthButton } from "../../components/ui/Button";
 import { ArrowRight } from "lucide-react";
-import { useRegisterMutation } from "../../store/features/api/companyApiSlice";
+import { useRegisterCompanyMutation} from "../../store/features/api/authApiSlice.js";
 import { toast } from "sonner";
 
 export default function RegisterCompany() {
   const [register, { isLoading, isSuccess, isError, error }] =
-    useRegisterMutation();
+    useRegisterCompanyMutation();
   const navigate = useNavigate();
   useEffect(() => {
     if (isSuccess) {

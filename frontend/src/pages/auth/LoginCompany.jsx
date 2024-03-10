@@ -8,7 +8,9 @@ import { ArrowRight } from "lucide-react";
 
 export default function LoginCompany() {
   const loginSchema = Yup.object().shape({
-    companyEmail: Yup.string().email("Invalid Email").required("Email is required"),
+    companyEmail: Yup.string()
+      .email("Invalid Email")
+      .required("Email is required"),
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 6 characters"),

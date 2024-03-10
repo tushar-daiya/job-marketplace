@@ -10,7 +10,7 @@ import LoginStudent from "./pages/auth/LoginStudent";
 import RegisterStudent from "./pages/auth/RegisterStudent";
 import RegisterCompany from "./pages/auth/RegisterCompany";
 import LoginCompany from "./pages/auth/LoginCompany";
-import { useGetMeQuery } from "./store/features/api/studentApiSlice";
+import { useGetMeQuery } from "./store/features/api/authApiSlice.js";
 import FullScreenLoader from "./components/ui/FullScreenLoader";
 function App() {
   const { isError, isLoading, data: me, error } = useGetMeQuery();

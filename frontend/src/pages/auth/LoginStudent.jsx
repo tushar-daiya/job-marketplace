@@ -5,14 +5,14 @@ import * as Yup from "yup";
 import { Input, Label, PasswordInput } from "../../components/ui/Input";
 import { Button, GoogleAuthButton } from "../../components/ui/Button";
 import { ArrowRight } from "lucide-react";
-import { useLoginMutation } from "../../store/features/api/studentApiSlice";
+import { useLoginStudentMutation } from "../../store/features/api/authApiSlice.js";
 import { toast } from "sonner";
 import Spinner from "../../components/ui/Spinner";
 export default function LoginStudent() {
   const navigate = useNavigate();
   console.log(document.cookie.split(";"));
-  const [loginUser, { data, error, isLoading, isSuccess, isError }] =
-    useLoginMutation();
+  const [loginStudent, { data, error, isLoading, isSuccess, isError }] =
+    useLoginStudentMutation();
   useEffect(() => {
     if (isSuccess) {
       toast.success("Login Successful");
@@ -41,7 +41,7 @@ export default function LoginStudent() {
         initialValues={{ email: "", password: "" }}
         validationSchema={loginSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await loginUser(values);
+          await loginStudent(values);
           setSubmitting(false);
           resetForm();
           // navigate("/student/dashboard");

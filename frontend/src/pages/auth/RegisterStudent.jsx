@@ -5,12 +5,12 @@ import * as Yup from "yup";
 import { Input, Label, PasswordInput } from "../../components/ui/Input";
 import { Button, GoogleAuthButton } from "../../components/ui/Button";
 import { ArrowRight } from "lucide-react";
-import { useRegisterMutation } from "../../store/features/api/studentApiSlice";
+import { useRegisterStudentMutation } from "../../store/features/api/authApiSlice.js";
 import { toast } from "sonner";
 
 export default function RegisterStudent() {
   const [register, { isLoading, isSuccess, isError, error }] =
-    useRegisterMutation();
+    useRegisterStudentMutation();
     const navigate=useNavigate();
   useEffect(() => {
     if (isSuccess) {
