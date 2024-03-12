@@ -9,8 +9,6 @@ import { useLoginStudentMutation } from "../../store/features/api/authApiSlice.j
 import { toast } from "sonner";
 import Spinner from "../../components/ui/Spinner";
 export default function LoginStudent() {
-  const navigate = useNavigate();
-  console.log(document.cookie.split(";"));
   const [loginStudent, { data, error, isLoading, isSuccess, isError }] =
     useLoginStudentMutation();
   useEffect(() => {

@@ -12,6 +12,7 @@ import RegisterCompany from "./pages/auth/RegisterCompany";
 import LoginCompany from "./pages/auth/LoginCompany";
 import { useGetMeQuery } from "./store/features/api/authApiSlice.js";
 import FullScreenLoader from "./components/ui/FullScreenLoader";
+import Dashboard from "./pages/company/Dashboard.jsx";
 function App() {
   const { isError, isLoading, data: me, error } = useGetMeQuery();
   if (isLoading) return <FullScreenLoader />;
@@ -55,6 +56,23 @@ function App() {
           >
             <Route path="dashboard" element={<div>Student Dashboard</div>} />
             <Route path="profile" element={<div>Student Profile</div>} />
+          </Route>
+          <Route
+            path="/company/*"
+            element={
+              me ? (
+                me.type == "company" ? (
+                  <Outlet />
+                ) : (
+                  <Navigate to={"/student/dashboard"} />
+                )
+              ) : (
+                <Navigate to={"/auth/company/login"} />
+              )
+            }
+          >
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="profile" element={<div>Company Profile</div>} />
           </Route>
         </Routes>
       </BrowserRouter>

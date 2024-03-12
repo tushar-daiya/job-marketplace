@@ -1,14 +1,26 @@
 import { Formik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Input, Label, PasswordInput } from "../../components/ui/Input";
 import { Button, GoogleAuthButton } from "../../components/ui/Button";
 import { ArrowRight } from "lucide-react";
-
+import { useLoginCompanyMutation } from "../../store/features/api/authApiSlice.js";
+import { toast } from "sonner";
+import Spinner from "../../components/ui/Spinner.jsx";
 export default function LoginCompany() {
+  const [LoginCompany, { isLoading, isSuccess, isError, error }] =
+    useLoginCompanyMutation();
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login Successful");
+    }
+    if (isError) {
+      toast.error(error.message);
+    }
+  }, [isLoading, isSuccess, isError]);
   const loginSchema = Yup.object().shape({
-    companyEmail: Yup.string()
+    email: Yup.string()
       .email("Invalid Email")
       .required("Email is required"),
     password: Yup.string()
@@ -27,8 +39,9 @@ export default function LoginCompany() {
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={loginSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           console.log(values);
+          await LoginCompany(values);
           setSubmitting(false);
           resetForm();
         }}
@@ -44,19 +57,19 @@ export default function LoginCompany() {
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="mt-5">
-              <Label htmlFor="companyEmail" name="companyEmail">
+              <Label htmlFor="email" name="email">
                 Company Email
               </Label>
               <Input
-                type="companyEmail"
-                name="companyEmail"
-                id="companyEmail"
-                value={values.companyEmail}
+                type="email"
+                name="email"
+                id="email"
+                value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.companyEmail && touched.companyEmail && (
-                <div className="text-red-500 mt-2">{errors.companyEmail}</div>
+              {errors.email && touched.email && (
+                <div className="text-red-500 mt-2">{errors.email}</div>
               )}
             </div>
             <div className="mt-5">
@@ -87,8 +100,14 @@ export default function LoginCompany() {
                 disabled={isSubmitting}
                 className="w-full bg-blue-800 hover:bg-blue-900 text-white"
               >
-                Sign In
-                <ArrowRight size={20} />
+                {isSubmitting ? (
+                  <Spinner />
+                ) : (
+                  <>
+                    Sign In
+                    <ArrowRight size={20} />
+                  </>
+                )}
               </Button>
             </div>
             <div className="mt-5">

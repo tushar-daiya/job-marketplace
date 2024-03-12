@@ -15,7 +15,7 @@ export default function RegisterCompany() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Registered Successfully");
-      navigate("/auth/student/login");
+      navigate("/auth/company/login");
     }
     if (isError) {
       console.log(error);
