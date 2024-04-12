@@ -8,6 +8,7 @@ export const uploadToCloudinary = async (file) => {
     fs.unlinkSync(file);
     return result;
   } catch (error) {
+    fs.unlinkSync(file);
     throw new Error(error.message);
   }
 };

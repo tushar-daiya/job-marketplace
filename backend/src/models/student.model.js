@@ -73,6 +73,10 @@ const studentSchema = new Schema(
         },
       },
     ],
+    resume: {
+      type: String,
+      required: false,
+    },
     appliedJobs: [
       {
         type: Schema.Types.ObjectId,
