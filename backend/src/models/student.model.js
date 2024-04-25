@@ -77,10 +77,10 @@ const studentSchema = new Schema(
       type: String,
       required: false,
     },
-    appliedJobs: [
+    applications: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Job",
+        ref: "Application",
       },
     ],
   },

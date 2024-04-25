@@ -9,6 +9,7 @@ const applicationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Student",
   },
+  //statement of purpose(sop)
   sop: {
     type: String,
     required: true,
@@ -17,6 +18,7 @@ const applicationSchema = new Schema({
     type: String,
     required: true,
     enum: ["Applied", "Shortlisted", "Accepted", "Rejected"],
+    default: "Applied",
   },
   dateOfApplication: {
     type: Date,
@@ -28,6 +30,7 @@ const applicationSchema = new Schema({
   },
   resumeScore: {
     type: Number,
+    default: 0,
     required: false,
   },
 });

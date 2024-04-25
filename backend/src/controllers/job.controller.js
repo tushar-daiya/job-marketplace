@@ -9,17 +9,17 @@ export const createJob = async (req, res, next) => {
       title,
       description,
       location,
-      eligibility,
       experience,
       skills,
       salary,
+      openings,
     } = req.body;
     if (
       !type ||
       !title ||
       !description ||
       !location ||
-      !eligibility ||
+      !openings ||
       !experience ||
       !skills ||
       !salary
@@ -33,10 +33,10 @@ export const createJob = async (req, res, next) => {
       description,
       company: company._id,
       location,
-      eligibility,
       experience,
       skills,
       salary,
+      openings,
     });
     company.jobs.push(job._id);
     await company.save();
@@ -69,7 +69,8 @@ export const applyJob = async (req, res, next) => {
 
 export const getJobs = async (req, res, next) => {
   try {
-    const jobs = await Job.find().populate(
+    console.log(req.query)
+    const jobs = await Job.find(req.query).populate(
       "company",
       "companyName logo socials"
     );

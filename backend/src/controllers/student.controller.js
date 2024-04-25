@@ -26,7 +26,7 @@ export const updateProfile = async (req, res, next) => {
     ) {
       throw new ApiError(400, "All fields are required");
     }
-    const student = await Student.findById(req.user._id);
+    const student = await Student.findById(req.student._id);
     if (!student) {
       throw new ApiError(404, "Student not found");
     }
@@ -49,11 +49,11 @@ export const updateResume = async (req, res, next) => {
   try {
     const file = req.file;
     if (file) {
-      const resume = await uploadToCloudinary(file.path);
-      const student = await Student.findById(req.user._id);
+      const student = await Student.findById(req.student._id);
       if (!student) {
         throw new ApiError(404, "Student not found");
       }
+      const resume = await uploadToCloudinary(file.path);
       student.resume = resume.secure_url;
       await student.save();
       res

@@ -3,7 +3,11 @@ import {
   verifyCompanyToken,
   verifyStudentToken,
 } from "../middlewares/auth.middleware.js";
-import { applyJob, createJob, getJobs } from "../controllers/job.controller.js";
+import {
+  applyJob,
+  createJob,
+  getJobs,
+} from "../controllers/job.controller.js";
 
 export const jobRouter = Router();
 

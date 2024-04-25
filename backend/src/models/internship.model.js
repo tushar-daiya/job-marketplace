@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
-const jobSchema = new Schema({
-  jobType: {
+const internshipSchema = new Schema({
+  internshipType: {
     type: String,
     required: true,
     enum: ["Hybrid", "Remote", "Onsite"],
@@ -18,7 +18,15 @@ const jobSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Company",
   },
+  duration: {
+    type: String,
+    required: true,
+  },
   location: {
+    type: String,
+    required: true,
+  },
+  eligibility: {
     type: String,
     required: true,
   },
@@ -32,7 +40,7 @@ const jobSchema = new Schema({
       required: true,
     },
   ],
-  salary: {
+  stipend: {
     type: String,
     required: true,
   },
@@ -40,12 +48,14 @@ const jobSchema = new Schema({
     type: Number,
     required: true,
   },
-  applications: [
+  joiningDate: {
+    type: Date,
+    required: true,
+  },
+  application: [
     {
       type: Schema.Types.ObjectId,
       ref: "Application",
     },
   ],
 });
-
-export const Job = mongoose.model("Job", jobSchema);
